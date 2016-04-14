@@ -1,38 +1,24 @@
 // Configure a view object, to hold all our functions for dynamic updates and article-related event handlers.
-var articleViewArray = [];
 
-function FilterOptions(opts){
-  for (key in opts) this[key] = opts[key];
-};
-
-FilterOptions.prototype.toHtml = function(){
-  var template = Handlebars.compile($('#author-template').html());
-  return template(this);
-};
-
-rawData.forEach(function(filterOptionObject){
-  articleViewArray.push(new FilterOptions(filterOptionObject));
-});
-
-articleViewArray.forEach(function(ourNewFilterOptionObject){
-  $('#author-filter').append(ourNewFilterOptionObject.toHtml());
-});
 
 var articleView = {};
 
 
-articleView.populateFilters = function() {
-  $('article').each(function() {
-    if (!$(this).hasClass('template')) {
-
-      val = $(this).attr('data-category');
-      optionTag = '<option value="' + val + '">' + val + '</option>';
-      if ($('#category-filter option[value="' + val + '"]').length === 0) {
-        $('#category-filter').append(optionTag);
-      }
-    }
-  });
-};
+// articleView.populateFilters = function() {
+//   $('article').each(function() {
+//     if (!$(this).hasClass('template')) {
+//        var val = $(this).find('address a').text();
+//        var optionTag = '<option value="' + val + '">' + val + '</option>';
+//        $('#author-filter').append(optionTag);
+//
+//        val = $(this).attr('data-category');
+//        optionTag = '<option value="' + val + '">' + val + '</option>';
+//       if ($('#category-filter option[value="' + val + '"]').length === 0) {
+//          $('#category-filter').append(optionTag);
+//       }
+//     }
+//   });
+// };
 
 // ====================================================
 
@@ -86,7 +72,7 @@ articleView.setTeasers = function() {
 };
 
 $(document).ready(function() {
-  articleView.populateFilters();
+  // articleView.populateFilters();
   articleView.handleCategoryFilter();
   articleView.handleAuthorFilter();
   articleView.handleMainNav();
