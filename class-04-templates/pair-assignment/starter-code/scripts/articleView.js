@@ -1,12 +1,29 @@
 // Configure a view object, to hold all our functions for dynamic updates and article-related event handlers.
+var articleViewArray = [];
+
+function FilterOptions(opts){
+  for (key in opts) this[key] = opts[key];
+};
+
+FilterOptions.prototype.toHtml = function(){
+  var template = Handlebars.compile($('#author-template').html());
+  return template(this);
+};
+
+rawData.forEach(function(filterOptionObject){
+  articleViewArray.push(new FilterOptions(filterOptionObject));
+});
+
+articleViewArray.forEach(function(ourNewFilterOptionObject){
+  $('#author-filter').append(ourNewFilterOptionObject.toHtml());
+});
+
 var articleView = {};
+
 
 articleView.populateFilters = function() {
   $('article').each(function() {
     if (!$(this).hasClass('template')) {
-      var val = $(this).find('address a').text();
-      var optionTag = '<option value="' + val + '">' + val + '</option>';
-      $('#author-filter').append(optionTag);
 
       val = $(this).attr('data-category');
       optionTag = '<option value="' + val + '">' + val + '</option>';
@@ -16,6 +33,12 @@ articleView.populateFilters = function() {
     }
   });
 };
+
+// ====================================================
+
+
+
+// ====================================================
 
 articleView.handleAuthorFilter = function() {
   $('#author-filter').on('change', function() {
@@ -68,4 +91,4 @@ $(document).ready(function() {
   articleView.handleAuthorFilter();
   articleView.handleMainNav();
   articleView.setTeasers();
-})
+});
