@@ -77,30 +77,30 @@ articleView.initNewArticlePage = function() {
 };
 
 articleView.create = function() {
-
+  // TODO: Clear out the #articles element, so we can put in the updated preview
   $('#article-preview').empty();
-  // TODO: Set up a var to hold the new article we are creating.
+
+  // TODO: Instantiate an article based on what's in the form fields:
   var formArticle = new Article({
     title: $('#article-title').val(),
     author: $('#article-author').val(),
     authorUrl: $('#article-author-url').val(),
     category: $('#article-category').val(),
     body: $('#article-body').val(),
-    publishedOn: $('article-published:checked').length ? new Date() : null
+    publishedOn: $('#article-published:checked').length ? new Date() : null
   });
-  // Clear out the #articles element, so we can put in the updated preview
-  
-  // TODO: Instantiate an article based on what's in the form fields:
 
   // TODO: Use our interface to the Handblebars template to put this new article into the DOM:
-  $('#article-preview').append(formArticle.toHtml());
+    $('#article-preview').append(formArticle.toHtml());
+
   // TODO: Activate the highlighting of any code blocks:
-  $('pre code').each(function(i, block) {
-    hljs.highLightBlock(block);
-  });
+    $('pre code').each(function(i, block) {
+      hljs.highlightBlock(block);
+    });
+
   // TODO: Export the new article as JSON, so it's ready to copy/paste into blogArticles.js:
-  $('#export-field').show();
-  $('#article-json').val(JSON.stringify(formArticle) + ',');
+    $('#export-field').show();
+    $('#article-json').val(JSON.stringify(formArticle) + ',');
 };
 
 
