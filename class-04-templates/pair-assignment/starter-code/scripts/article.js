@@ -1,4 +1,4 @@
-var articles = [];
+var articles = [], categories = [];
 
 function Article (opts) {
   this.author = opts.author;
@@ -9,18 +9,8 @@ function Article (opts) {
   this.publishedOn = opts.publishedOn;
 }
 
-Article.prototype.toAuthHtml = function(){
-  var template = Handlebars.compile($('#author-template').html());
-  return template(this);
-};
-
-Article.prototype.toCatHtml = function(){
-  var template = Handlebars.compile($('#category-template').html());
-  return template(this);
-};
-
-Article.prototype.toHtml = function() {
-  var $source = $('#blog-template').html();
+Article.prototype.toHtml = function(templateId) {
+  var $source = $('#' + templateId + '-template').html();
   var template = Handlebars.compile($source);
 
   // DONE: Use handlebars to render your articles.
@@ -47,14 +37,10 @@ rawData.forEach(function(ele) {
 });
 
 articles.forEach(function(a){
-  $('#articles').append(a.toHtml());
-});
-
-articles.forEach(function(ourNewaFilterOptionObject){
-  $('#author-filter').append(ourNewaFilterOptionObject.toAuthHtml());
-});
-
-articles.forEach(function(ourNewcFilterOptionObject){
-  $('#category-filter').append(ourNewcFilterOptionObject.toCatHtml());
-
+  $('#articles').append(a.toHtml('blog'));
+  $('#author-filter').append(a.toHtml('author'));
+  if (categories.indexOf(a.category) === -1){
+    $('#category-filter').append(a.toHtml('category'));
+    categories.push(a.category);
+  }
 });
