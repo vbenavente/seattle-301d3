@@ -91,9 +91,13 @@ Article.numWordsAll = function() {
 
 // TODO: Chain together a `map` and a `reduce` call to produce an array of unique author names.
 Article.allAuthors = function() {
-  return       // map our collection
-    return    // return just the author names
-
+  return Article.all.map(function(article) {
+    return article.author;
+  })    // map our collection
+     // return just the author names
+    .filter(function removeDuplicate(value, index, array) {
+      return array.indexOf(value) == index;
+    });
     // For our `reduce` that we'll chain here -- since we are trying to return an array, we'll need to specify an accumulator type...
     // what data type should this accumulator be and where is it placed?
 };
@@ -103,15 +107,23 @@ Article.numWordsByAuthor = function() {
   // the author's name, and one for the total number of words across the matching articles
   // written by the specified author.
   return Article.allAuthors().map(function(author) {
-    return {
+    return 
       // name:
+      name: author,
       // numWords: someCollection.filter(function(curArticle) {
+      numWords: Article.all.filter(function(curArticle)) {
+        if (article.author == author) {
+          return article.body.match(/\b\w+/g).length;
+        })
+          .reduce(function(a, b) {
+            return a + b;
+          })
+      }
       //  what do we return here to check for matching authors?
       // })
       // .map(...) // use .map to return the author's word count for each article (hint: regexp!).
       // .reduce(...) // squash this array of numbers into one big number!
-    }
-  })
+    });
 };
 
 module.Article = Article;
