@@ -1,4 +1,4 @@
-// TODO: Wrap the entire contents of this file in an IIFE.
+// DONE: Wrap the entire contents of this file in an IIFE.
 // Pass in to the IIFE a module, upon which objects can be attached for later access.
 (function(module) {
   var article = {};
@@ -45,7 +45,7 @@ Article.loadAll = function(dataPassedIn) {
 // This function will retrieve the data from either a local or remote source,
 // and process it, then hand off control to the View.
 
-// TODO: Refactor the Article.fetchAll method, and provide it with a parameter of a callback
+// DONE: Refactor the Article.fetchAll method, and provide it with a parameter of a callback
 // function (for now just a placeholder, but to be referenced at call-time as a "view" function)
 // that will execute once the loading of articles is done. We do this because we might want
 // to call other view functions, and not just the initIndexPage() that we are replacing.
@@ -89,7 +89,7 @@ Article.numWordsAll = function() {
   });
 };
 
-// TODO: Chain together a `map` and a `reduce` call to produce an array of unique author names.
+// DONE: Chain together a `map` and a `reduce` call to produce an array of unique author names.
 Article.allAuthors = function() {
   return Article.all.map(function(article) {
     return article.author;
@@ -103,11 +103,11 @@ Article.allAuthors = function() {
 };
 
 Article.numWordsByAuthor = function() {
-  // TODO: Transform each element into an object with 2 properties: One for
+  // DONE: Transform each element into an object with 2 properties: One for
   // the author's name, and one for the total number of words across the matching articles
   // written by the specified author.
   return Article.allAuthors().map(function(author) {
-     var chris = {
+     var info = {
       // name:
       name: author,
       // numWords: someCollection.filter(function(curArticle) {
@@ -123,8 +123,7 @@ Article.numWordsByAuthor = function() {
            return  a + b;
            })
       }
-      console.log(chris);
-      return chris;
+      return info;
     });
       //  what do we return here to check for matching authors?
       // })
