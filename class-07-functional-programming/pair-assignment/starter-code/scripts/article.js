@@ -50,7 +50,7 @@ Article.loadAll = function(dataPassedIn) {
 // that will execute once the loading of articles is done. We do this because we might want
 // to call other view functions, and not just the initIndexPage() that we are replacing.
 // Now, instead of calling articleView.initIndexPage(), we can just run our callback.
-Article.fetchAll = function() {
+Article.fetchAll = function(callback) {
   if (localStorage.hackerIpsum) {
     $.ajax({
       type: 'HEAD',
@@ -62,7 +62,7 @@ Article.fetchAll = function() {
           Article.getAll();
         } else {
           Article.loadAll(JSON.parse(localStorage.hackerIpsum));
-          articleView.initIndexPage();
+          callback();
         }
       }
     });
@@ -86,7 +86,7 @@ Article.numWordsAll = function() {
   })
   .reduce(function(a, b) {
     return a + b;// Sum up all the values!
-  })
+  });
 };
 
 // TODO: Chain together a `map` and a `reduce` call to produce an array of unique author names.
@@ -107,24 +107,30 @@ Article.numWordsByAuthor = function() {
   // the author's name, and one for the total number of words across the matching articles
   // written by the specified author.
   return Article.allAuthors().map(function(author) {
-    return 
+     var chris = {
       // name:
       name: author,
       // numWords: someCollection.filter(function(curArticle) {
-      numWords: Article.all.filter(function(curArticle)) {
-        if (article.author == author) {
-          return article.body.match(/\b\w+/g).length;
+      numWords: Article.all.filter(function(curArticle) {
+
+        if (curArticle.author == author) {
+          return curArticle;
+        }
+      }).map(function(curArticle) {
+          return curArticle.body.match(/\b\w+/g).length;
         })
           .reduce(function(a, b) {
-            return a + b;
-          })
+           return  a + b;
+           })
       }
+      console.log(chris);
+      return chris;
+    });
       //  what do we return here to check for matching authors?
       // })
       // .map(...) // use .map to return the author's word count for each article (hint: regexp!).
       // .reduce(...) // squash this array of numbers into one big number!
-    });
-};
+    };
 
 module.Article = Article;
 
